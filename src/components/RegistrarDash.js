@@ -55,6 +55,12 @@ const RegistrarDash = ()=>{
                   >
                     All courses
                   </Link>
+                  <Link
+                    to="/pending-courses"
+                    className="block text-lg font-medium hover:text-gray-400"
+                  >
+                    Course Requests
+                  </Link>
                 </li>
                 </li>
               </ul>

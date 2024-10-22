@@ -16,6 +16,13 @@ import ManageEnrollments from './components/ManageEnrollments';
 import ViewStudents from './components/ViewStudent';
 import ViewProfessors from './components/ViewProfessors';
 import ViewCourses from './components/ViewCourses';
+import CourseRequests from './components/CourseRequests';
+import AvailableCourses from './components/AvailableCourses';
+import EnrolledCourses from './components/EnrolledCourses';
+import CoursePage from './components/CoursePage';
+import CompletedCourses from './components/CompletedCourses';
+import GenerateReport from './components/GenerateReport';
+import StudentList from './components/StudentList';
 
 const AppLayout = ()=> {
   return(
@@ -93,7 +100,32 @@ const appRouter = createBrowserRouter([
         element: <ViewCourses />
       },
       {
-        path:'/course-requests',
+        path:'/pending-courses',
+        element: <CourseRequests />
+      },
+      {
+        path:'/available-courses',
+        element: <AvailableCourses />
+      },
+      {
+        path: '/my-courses',
+        element: <EnrolledCourses />
+      },
+      {
+        path:'/course/:courseId',
+        element: <CoursePage />
+      },
+      {
+        path:'/completed-courses',
+        element: <CompletedCourses />
+      },
+      {
+        path: '/generate-report',
+        element: <GenerateReport />
+      },
+      {
+        path: '/report/:courseId/students',
+        element: <StudentList />
       }
     ],
   },

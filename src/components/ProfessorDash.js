@@ -25,6 +25,14 @@ const ProfessorDash = () => {
                   View Approved Courses
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/generate-report"
+                  className="block text-lg font-medium hover:text-gray-400"
+                >
+                  Generate Student Reports
+                </Link>
+              </li>
             </ul>
           </nav>
         </div>
@@ -33,7 +41,7 @@ const ProfessorDash = () => {
         <div className="flex-grow p-12 bg-gray-100">
           <div className="bg-white shadow-lg rounded-lg p-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-4">
-              Welcome, {ProfessorName}!
+              Welcome, {ProfessorName} 👨🏽‍🏫!
             </h1>
             <p className="text-lg text-gray-600">
               Use the sidebar to create new courses or view the approved ones.
