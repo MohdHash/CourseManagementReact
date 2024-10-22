@@ -42,18 +42,18 @@ const Login = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-500">
             <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-                <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+                <h2 className="text-2xl font-bold mb-6 text-center">Login 👤</h2>
                 <form onSubmit={handleLogin}>
                     <input
                         type="email"
-                        placeholder="Email"
+                        placeholder="Email 💌"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         className="w-full mb-4 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500 transition"
                     />
                     <input
                         type="password"
-                        placeholder="Password"
+                        placeholder="Password 🔑"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         className="w-full mb-6 px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-500 transition"
@@ -62,7 +62,7 @@ const Login = () => {
                         type="submit"
                         className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-700 transition"
                     >
-                        Login
+                        Login 🚀
                     </button>
                 </form>
             </div>
