@@ -23,6 +23,7 @@ import CoursePage from './components/CoursePage';
 import CompletedCourses from './components/CompletedCourses';
 import GenerateReport from './components/GenerateReport';
 import StudentList from './components/StudentList';
+import Reports from './components/Reports';
 
 const AppLayout = ()=> {
   return(
@@ -126,6 +127,10 @@ const appRouter = createBrowserRouter([
       {
         path: '/report/:courseId/students',
         element: <StudentList />
+      },
+      {
+        path:'/report',
+        element: <Reports />
       }
     ],
   },

@@ -67,3 +67,4 @@ export const generateCert = ({studentName,courseName})=>{
       // Save PDF
       doc.save(`${courseName}_certificate.pdf`);
 }
+

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 // import jsPDF from "jspdf";
 import {generateCert} from '../utils/generateCert.js'
+import {markCourseAsCompleted} from '../utils/coursecompletetion.js'
 
 const CoursePage = () => {
   // eslint-disable-next-line
@@ -31,8 +32,9 @@ const CoursePage = () => {
   const allLecturesCompleted = completedLectures.length === lectures.length;
 
   // Generate PDF certificate
-  const handleGenerateCertificate = () => {
+  const handleGenerateCertificate = async () => {
     generateCert({studentName , courseName});
+    await markCourseAsCompleted({courseId});
   };
 
   return (

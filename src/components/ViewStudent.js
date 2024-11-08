@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { FaUserGraduate, FaEnvelope } from "react-icons/fa";
-
+import { FaUserGraduate, FaEnvelope , FaBan } from "react-icons/fa";
+import {toast} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; 
 const ViewStudents = () => {
   const [students, setStudents] = useState([]);
   const token = localStorage.getItem("token");
@@ -26,6 +27,22 @@ const ViewStudents = () => {
     fetchStudents();
   }, [token]);
 
+  const handleToggleStatus = async (id , isActive) => {
+    try{
+        const url = `https://localhost:7131/api/Auth/${isActive ? "suspend" : "approve"}/${id}`;
+        await axios.put(url , {} , {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        setStudents(students.map((student)=> 
+          student.userId === id ? {...student, isActive: !isActive} : student
+        ));
+        toast.success(`Student has been ${isActive ? "suspended" : "Enabled" }`)
+    }catch(error){
+      console.log("Error toggling student status", error);
+    }
+  }
+
   return (
     <div className="container mx-auto p-8">
       <h1 className="text-4xl font-extrabold text-gray-800 text-center mb-10">
@@ -38,22 +55,20 @@ const ViewStudents = () => {
               <th className="py-4 px-6 text-left">Name</th>
               <th className="py-4 px-6 text-left">Email</th>
               <th className="py-4 px-6 text-left">Status</th>
+              <th className="py-4 px-6 text-left">Actions</th>
             </tr>
           </thead>
           <tbody className="text-gray-600 text-sm font-light">
             {students.map((student) => (
               <tr key={student.userId} className="border-b border-gray-200 hover:bg-gray-50">
-                {/* Name with FaUserGraduate icon */}
                 <td className="py-4 px-6 text-left flex items-center">
                   <FaUserGraduate className="text-blue-500 mr-2" />
                   <span>{student.name}</span>
                 </td>
-                {/* Email with FaEnvelope icon */}
                 <td className="py-4 px-6 text-left flex items-center">
                   <FaEnvelope className="text-green-500 mr-2" />
                   <span>{student.email}</span>
                 </td>
-                {/* Status display */}
                 <td className="py-4 px-6 text-left">
                   <span
                     className={`py-1 px-3 rounded-full text-xs font-semibold ${
@@ -62,6 +77,15 @@ const ViewStudents = () => {
                   >
                     {student.isActive ? "Active" : "Inactive"}
                   </span>
+                </td>
+                <td className="py-4 px-6 text-left">
+                  <button
+                    className={`bg-${student.isActive ? "yellow" : "green"}-500 hover:bg-${student.isActive ? "yellow" : "green"}-600 text-white py-2 px-4 rounded flex items-center`}
+                    onClick={() => handleToggleStatus(student.userId, student.isActive)}
+                  >
+                    <FaBan className="mr-2" />
+                    {student.isActive ? "Suspend" : "Enable"}
+                  </button>
                 </td>
               </tr>
             ))}

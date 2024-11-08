@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
     const [name, setName] = useState('');
@@ -11,16 +13,54 @@ const Register = () => {
 
     const handleRegister = async (e) => {
         e.preventDefault();
+
         try {
-            await axios.post('https://localhost:7131/api/Auth/register', { name, email, password, role });
-            navigate('/login');
+            // eslint-disable-next-line
+            const response = await axios.post('https://localhost:7131/api/Auth/register', { name, email, password, role });
+            
+            // Show success toast notification
+            toast.success("Registration successful! Redirecting to login...", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+
+            setTimeout(() => navigate('/login'), 3000); // Redirect after a short delay
         } catch (err) {
+            if (err.response && err.response.data) {
+                // Show error toast notification with server message
+                toast.error(err.response.data, {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            } else {
+                // Show generic error toast notification
+                toast.error('Registration failed due to an unexpected error.', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
             console.error('Registration failed:', err);
         }
     };
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-400 to-blue-500">
+            <ToastContainer /> {/* Add ToastContainer to render the toasts */}
             <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
                 <h2 className="text-2xl font-bold mb-6 text-center">Register ✅</h2>
                 <form onSubmit={handleRegister}>

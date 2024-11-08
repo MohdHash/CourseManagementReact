@@ -48,13 +48,16 @@ const RegistrarDash = ()=>{
                   >
                     All Professors
                   </Link>
-                  <li>
+                </li>
+                <li>
                   <Link
                     to="/all-courses"
                     className="block text-lg font-medium hover:text-gray-400"
                   >
                     All courses
                   </Link>
+                </li>
+                <li>
                   <Link
                     to="/pending-courses"
                     className="block text-lg font-medium hover:text-gray-400"
@@ -62,6 +65,13 @@ const RegistrarDash = ()=>{
                     Course Requests
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    to="/report"
+                    className="block text-lg font-medium hover:text-gray-400"
+                  >
+                    Reports
+                  </Link>
                 </li>
               </ul>
             </nav>

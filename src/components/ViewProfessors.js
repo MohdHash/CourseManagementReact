@@ -4,15 +4,15 @@ import { FaChalkboardTeacher, FaEnvelope, FaTrashAlt, FaBan } from "react-icons/
 
 const ViewProfessors = () => {
   const [professors, setProfessors] = useState([]);
-const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
     const fetchProfessors = async () => {
       try {
-        const response = await axios.get("https://localhost:7131/api/Auth/approved-professors",{
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-  
+        const response = await axios.get("https://localhost:7131/api/Auth/approved-professors", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         setProfessors(response.data.$values);
       } catch (error) {
@@ -23,20 +23,34 @@ const token = localStorage.getItem('token');
     fetchProfessors();
   }, [token]);
 
-  const handleSuspend = async (id) => {
+  const handleSuspend = async (id, isActive) => {
     try {
-      await axios.put(`https://localhost:7131/api/Auth/suspend/${id}`);
-      alert(`Professor ${id} suspended`);
-      setProfessors(professors.map(prof => prof.userId === id ? { ...prof, isActive: false } : prof));
+      if (isActive) {
+        await axios.put(`https://localhost:7131/api/Auth/suspend/${id}`, {}, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        alert(`Professor ${id} suspended`);
+      } else {
+        await axios.put(`https://localhost:7131/api/Auth/approve/${id}`, {}, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        alert(`Professor ${id} resumed`);
+      }
+      // Update professor's status in the local state
+      setProfessors((prevProfessors) =>
+        prevProfessors.map((prof) =>
+          prof.userId === id ? { ...prof, isActive: !isActive } : prof
+        )
+      );
     } catch (error) {
-      console.error("Error suspending professor:", error);
+      console.error("Error updating professor status:", error);
     }
   };
 
   const handleRemove = async (id) => {
     try {
       alert(`Professor ${id} removed`);
-      setProfessors(professors.filter(prof => prof.userId !== id));
+      setProfessors((prevProfessors) => prevProfessors.filter((prof) => prof.userId !== id));
     } catch (error) {
       console.error("Error removing professor:", error);
     }
@@ -77,11 +91,12 @@ const token = localStorage.getItem('token');
                 </td>
                 <td className="py-4 px-6 text-left flex space-x-4">
                   <button
-                    className="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded flex items-center"
-                    onClick={() => handleSuspend(professor.userId)}
-                    disabled={!professor.isActive}
+                    className={`${
+                      professor.isActive ? "bg-yellow-500 hover:bg-yellow-600" : "bg-green-500 hover:bg-green-600"
+                    } text-white py-2 px-4 rounded flex items-center`}
+                    onClick={() => handleSuspend(professor.userId, professor.isActive)}
                   >
-                    <FaBan className="mr-2" /> Suspend
+                    <FaBan className="mr-2" /> {professor.isActive ? "Suspend" : "Enable"}
                   </button>
                   <button
                     className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded flex items-center"

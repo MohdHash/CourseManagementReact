@@ -47,8 +47,8 @@ const ViewCourses = ()=>{
               </h2>
               <p className="text-gray-600 mb-4">
                 {course.courseContent.length > 100
-                  ? `${course.courseContent.substring(0, 100)}...`
-                  : course.courseContent}
+                  ? `${course.courseContent.substring(0, 100).split(';').join(' ')}...`
+                  : course.courseContent.split(';').join(' ')}
               </p>
               <button
                 className="text-blue-600 font-semibold hover:text-blue-800"

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaBook, FaChevronDown, FaChevronUp } from "react-icons/fa"; // Icons for courses and dropdowns
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 const AvailableCourses = () => {
@@ -51,7 +53,8 @@ const AvailableCourses = () => {
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      alert("Successfully enrolled in the course!");
+      toast.success("Waiting for Admin approval...!");
+      // alert("Successfully enrolled in the course!");
     } catch (error) {
       if (error.response && error.response.data) {
         alert(`Failed to enroll: ${error.response.data}`);
